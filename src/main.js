@@ -1,1 +1,106 @@
-import './public/css/style.css'
+import "./public/css/style.css";
+
+// on document ready just set an empty table
+document.addEventListener("DOMContentLoaded", () => {
+  const tableContainer = document.getElementById("tableContainer");
+  let tableHTML = "<table>";
+
+  for (let y = 0; y < 110; y += 4) {
+    tableHTML += "<tr>";
+
+    for (let x = 0; x < 150; x += 4) {
+      // Add a table cell with a checkbox and a label
+      tableHTML += `<td><input type="checkbox"/></td>`;
+    }
+    tableHTML += "</tr>";
+  }
+
+  tableHTML += "</table>";
+
+  tableContainer.innerHTML = tableHTML;
+
+  startRender();
+});
+
+function imageToTable(imagePath, cellSize) {
+  // Create a new Image object
+  const image = new Image();
+  // Set the source of the image to the specified imagePath
+  image.src = imagePath;
+
+  // Function to be executed when the image is fully loaded
+  image.onload = function () {
+    // Get the canvas element and its 2D rendering context
+    const canvas = document.getElementById("imageCanvas");
+    const context = canvas.getContext("2d");
+    // Get the container div where the table will be placed
+    const tableContainer = document.getElementById("tableContainer");
+
+    // Set the canvas size to match the image size
+    canvas.width = 150; // Adjusted for 100x100 resolution
+    canvas.height = 110; // Adjusted for 100x100 resolution
+
+    // Draw the image on the canvas
+    context.drawImage(image, 0, 0, 150, 110); // Adjusted for 100x100 resolution
+
+    // Generate the HTML table with checkboxes
+    let tableHTML = "<table>";
+    for (let y = 0; y < 110; y += cellSize) {
+      // Adjusted for 100x100 resolution
+      tableHTML += "<tr>";
+      for (let x = 0; x < 150; x += cellSize) {
+        // Adjusted for 100x100 resolution
+        // Get the pixel data at the current position
+        const pixelData = context.getImageData(x, y, 1, 1).data;
+        // Check if the pixel is black (assuming black is [0, 0, 0])
+        const isBlack =
+          pixelData[0] === 0 && pixelData[1] === 0 && pixelData[2] === 0;
+
+        // Add a table cell with a checkbox and a label
+        tableHTML += `
+                       <td>
+                          <input type="checkbox" id="checkbox_${x}_${y}" ${
+          isBlack ? "checked" : ""
+        } />
+                          <!-- <label for="checkbox_${x}_${y}" style="background-color: ${
+          isBlack ? "#333" : "#fff"
+        };"></label> -->
+                       </td>`;
+      }
+      tableHTML += "</tr>";
+    }
+    tableHTML += "</table>";
+
+    // Display the generated table in the container div
+    tableContainer.innerHTML = tableHTML;
+  };
+}
+
+// const imagePath = "./public/images/frames/frame-0095.jpg";
+// const cellSize = 4; // Adjusted for 100x100 resolution
+// imageToTable(imagePath, cellSize);
+
+function startRender() {
+  for(let frame = 0; frame < 1200; frame++) {
+    setTimeout(() => {
+      if(frame < 10) {
+        frame = `000${frame}`.slice(-4);
+      }
+
+      if(frame >= 10 && frame < 100) {
+        frame = `00${frame}`.slice(-4);
+      }
+
+      if(frame >= 100 && frame < 1000) {
+        frame = `0${frame}`.slice(-4);
+      }
+
+      const imagePath = `./public/images/frames/frame-${frame}.jpg`;
+      const cellSize = 4; // Adjusted for 100x100 resolution
+      imageToTable(imagePath, cellSize);
+
+    }, 250);
+    
+    console.log(frame);
+  }
+}
