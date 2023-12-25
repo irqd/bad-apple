@@ -1,27 +1,5 @@
 import "./public/css/style.css";
 
-// on document ready just set an empty table
-document.addEventListener("DOMContentLoaded", () => {
-  const tableContainer = document.getElementById("tableContainer");
-  let tableHTML = "<table>";
-
-  for (let y = 0; y < 110; y += 4) {
-    tableHTML += "<tr>";
-
-    for (let x = 0; x < 150; x += 4) {
-      // Add a table cell with a checkbox and a label
-      tableHTML += `<td><input type="checkbox"/></td>`;
-    }
-    tableHTML += "</tr>";
-  }
-
-  tableHTML += "</table>";
-
-  tableContainer.innerHTML = tableHTML;
-
-  startRender();
-});
-
 function imageToTable(imagePath, cellSize) {
   // Create a new Image object
   const image = new Image();
@@ -71,17 +49,14 @@ function imageToTable(imagePath, cellSize) {
     }
     tableHTML += "</table>";
 
-    // Display the generated table in the container div
     tableContainer.innerHTML = tableHTML;
   };
 }
 
-// const imagePath = "./public/images/frames/frame-0095.jpg";
-// const cellSize = 4; // Adjusted for 100x100 resolution
-// imageToTable(imagePath, cellSize);
-
 function startRender() {
-  for(let frame = 0; frame < 1200; frame++) {
+  console.log("start");
+
+  for(let frame = 0; frame <= 6572; frame++) {
     setTimeout(() => {
       if(frame < 10) {
         frame = `000${frame}`.slice(-4);
@@ -104,3 +79,20 @@ function startRender() {
     console.log(frame);
   }
 }
+
+function renderStartButton() {
+  const tableContainer = document.getElementById("tableContainer");
+  const tableHTML = `
+    <button id="start_bad_apple">Start Bad Apple</button>
+  `;
+
+  tableContainer.innerHTML = tableHTML;
+
+  const startBadApple = document.getElementById("start_bad_apple");
+  startBadApple.addEventListener("click", startRender);
+}
+
+// on document ready just set an empty table
+document.addEventListener("DOMContentLoaded", () => {
+  renderStartButton();
+});
