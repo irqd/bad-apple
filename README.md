@@ -4,7 +4,7 @@
 
 This is a recreation of [Bad Apple](https://www.youtube.com/watch?v=FtutLA63Cp8). Each frame is rendered using HTML checkboxes.
 
-## 3. How to run the project
+## 2. How to run the project
 
 1. **Clone the Repository:** Start by cloning the project repository from GitHub using the following command:
 
