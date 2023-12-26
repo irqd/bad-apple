@@ -1,5 +1,8 @@
-# bad-apple
-"Bad Apple" but is rendered using HTML checkboxes.
+# Bad Apple, but is rendered using HTML checkboxes
+
+## 1. About the Project
+
+This is a recreation of [Bad Apple](https://www.youtube.com/watch?v=FtutLA63Cp8). Each frame is rendered using HTML checkboxes.
 
 ## Sample gif:
   This sample was recorded on 4fps, then editted the playback to 7.5 to achieve 30fps.
