@@ -56,26 +56,29 @@ function imageToTable(imagePath, cellSize) {
 function startRender() {
   console.log("start");
 
-  for(let frame = 0; frame <= 6572; frame++) {
-    setTimeout(() => {
-      if(frame < 10) {
-        frame = `000${frame}`.slice(-4);
-      }
+  // Define the frame rate and calculate the delay for each frame
+  const frameRate = 6; // frames per second
+  const delayPerFrame = 3000 / frameRate; // milliseconds per frame
 
-      if(frame >= 10 && frame < 100) {
-        frame = `00${frame}`.slice(-4);
-      }
+  for (let frame = 0; frame <= 6572; frame++) {
+    (function (currentFrame) {
+      setTimeout(() => {
+        let paddedFrame = currentFrame;
 
-      if(frame >= 100 && frame < 1000) {
-        frame = `0${frame}`.slice(-4);
-      }
+        if (currentFrame < 10) {
+          paddedFrame = `000${currentFrame}`.slice(-4);
+        } else if (currentFrame < 100) {
+          paddedFrame = `00${currentFrame}`.slice(-4);
+        } else if (currentFrame < 1000) {
+          paddedFrame = `0${currentFrame}`.slice(-4);
+        }
 
-      const imagePath = `./public/images/frames/frame-${frame}.jpg`;
-      const cellSize = 4; // Adjusted for 100x100 resolution
-      imageToTable(imagePath, cellSize);
+        const imagePath = `./public/images/frames/frame-${paddedFrame}.jpg`;
+        const cellSize = 4; // Adjusted for 100x100 resolution
+        imageToTable(imagePath, cellSize);
+      }, delayPerFrame * currentFrame);
+    })(frame);
 
-    }, 250);
-    
     console.log(frame);
   }
 }
