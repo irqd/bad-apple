@@ -60,7 +60,7 @@ function startRender() {
   // and so on...
 
   // Define the frame rate and calculate the delay for each frame
-  const frameRate = 6; // frames per second
+  const frameRate = 90; // frames per second
   const delayPerFrame = 3000 / frameRate; // milliseconds per frame
 
   for (let frame = 0; frame <= 6572; frame++) {
